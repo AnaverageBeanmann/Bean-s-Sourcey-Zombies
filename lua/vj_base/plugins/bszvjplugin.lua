@@ -34,16 +34,16 @@ if CLIENT then
 
 			Panel:Help("Changes do not affect already existing NPCs, only ones spawned after changes are made!")
 
-			local bbohg_resetbutton = {Options = {}, CVars = {}, Label = "Reset Everything:", MenuButton = "0"}
-				bbohg_resetbutton.Options["#vjbase.menugeneral.default"] = {
-				bbohgg_nogodsnomasters = "0",
-				bbohgg_disableitemdrops = "0",
-				bbohgg_spawnsequences = "1",
-				bbohgb_announcetoughenemies = "2",
-				bbohgt_hostiletossers = "0",
-				bbohgt_beergibs = "0",
-			}
-			Panel:AddControl("ComboBox", bbohg_resetbutton) -- AddControl is deprecated, need to find replacement
+			-- local bbohg_resetbutton = {Options = {}, CVars = {}, Label = "Reset Everything:", MenuButton = "0"}
+				-- bbohg_resetbutton.Options["#vjbase.menugeneral.default"] = {
+				-- bbohgg_nogodsnomasters = "0",
+				-- bbohgg_disableitemdrops = "0",
+				-- bbohgg_spawnsequences = "1",
+				-- bbohgb_announcetoughenemies = "2",
+				-- bbohgt_hostiletossers = "0",
+				-- bbohgt_beergibs = "0",
+			-- }
+			-- Panel:AddControl("ComboBox", bbohg_resetbutton) -- AddControl is deprecated, need to find replacement
 
 			Panel:CheckBox("Spawn intros?", "bsz_spawnintros")
 
