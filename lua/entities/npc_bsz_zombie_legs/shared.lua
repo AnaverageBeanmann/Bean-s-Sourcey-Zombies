@@ -4,5 +4,5 @@ ENT.PrintName = "Zombie Legs"
 ENT.Author = "An average Beanmann"
 ENT.Contact = ""
 ENT.Information = "Lower half of a Zombie.\nMoves faster at close range.\n"
-ENT.Category = "Bean's Bag of Hot Garbage"
+ENT.Category = "Bean's Sourcey Zombies"
 ENT.VJ_ID_Undead = true

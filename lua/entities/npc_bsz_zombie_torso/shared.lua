@@ -4,5 +4,5 @@ ENT.PrintName = "Zombie Torso"
 ENT.Author = "An average Beanmann"
 ENT.Contact = ""
 ENT.Information = "Upper half of a Zombie.\nCan spawn with a Headcrab.\nMoves faster at close range.\n"
-ENT.Category = "Bean's Bag of Hot Garbage"
+ENT.Category = "Bean's Sourcey Zombies"
 ENT.VJ_ID_Undead = true
