@@ -12,6 +12,8 @@ VJ.AddCategoryInfo(vCatZ, {Icon = "icons/bszicon.png"})
 -- Headcrabs
 	VJ.AddNPC("Headcrab", "npc_bsz_headcrab", vCatZ)
 	VJ.AddNPC("Headcrab (Hanging)", "npc_bsz_headcrab_hanging", vCatZ, false, function(x) x.OnCeiling = true x.Offset = 24.5 end)
+-- Ghouls
+	VJ.AddNPC("Ghoul", "npc_bsz_ghoul", vCatZ)
 -- Misc.
 	VJ.AddNPC("Crabbed", "npc_bsz_crabbed", vCatZ)
 
