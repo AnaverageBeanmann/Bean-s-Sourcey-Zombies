@@ -226,12 +226,12 @@ function ENT:BSZ_Zombie_CrabUnlatchEffects(spawncrab)
 	VJ.EmitSound(self, "physics/body/body_medium_break"..math.random(2,4)..".wav", 80, math.random(95,105))
 	VJ.EmitSound(self, "physics/flesh/flesh_squishy_impact_hard"..math.random(1,4)..".wav", 80, math.random(95,105))
 
-	if self.BSZ_Zombie_MainType == "Crabbed" then
-		self:TakeDamage(self:Health() * 2, self, self)
-		timer.Simple(1, function() if IsValid(self) && !self.Dead then
-			self:Dissolve()
-		end end)
-	end
+	-- if self.BSZ_Zombie_MainType == "Crabbed" then
+		-- self:TakeDamage(self:Health() * 2, self, self)
+		-- timer.Simple(1, function() if IsValid(self) && !self.Dead then
+			-- self:Dissolve()
+		-- end end)
+	-- end
 
 end
 --------------------

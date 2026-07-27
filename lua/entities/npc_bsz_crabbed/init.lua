@@ -75,7 +75,11 @@ end
 function ENT:BSZ_CustomOnPreDamaged(dmginfo, hitgroup, status)
 	if hitgroup == HITGROUP_HEAD && self.BSZ_Zombie_HasCrab then
 		self.BSZ_Zombie_CrabHealth = self.BSZ_Zombie_CrabHealth - dmginfo:GetDamage()
-		dmginfo:ScaleDamage(0.75)
+		if self.BSZ_Zombie_CrabHealth > 0 then
+			dmginfo:ScaleDamage(0.75)
+		else
+			dmginfo:SetDamage(self:Health() * 2)
+		end
 	end
 end
 --------------------
