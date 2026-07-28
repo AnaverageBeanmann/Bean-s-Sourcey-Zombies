@@ -1,0 +1,5 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/boz/astro/viewarm_zom_pressure_suit_c"
+	"$bumpmap" "models/boz/astro/viewarm_zom_pressure_suit_n"
+}

@@ -1,0 +1,12 @@
+"VertexlitGeneric"
+{
+	"$basetexture" "models/boz/astro/viewarm_zom_pressure_suit_c"
+	"$bumpmap" "models/boz/astro/viewarm_zom_pressure_suit_n"
+	
+	"$phong"	"1"
+	"$phongboost"	"1"
+	"$phongexponent" "1"
+	"$phongtint" "[0.8 0.8 0.8]"
+	"$normalmapalphaphongmask"	"1"
+	"$phongfresnelranges"	"[0.7 0.85 1]"
+}

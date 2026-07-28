@@ -1,0 +1,4 @@
+VertexLitGeneric {
+	$basetexture models\boz\astro\c_zom_moon_pressure_suit_c
+	$bumpmap "models\boz\astro\c_zom_moon_pressure_suit_c_n"
+}

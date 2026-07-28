@@ -1,0 +1,11 @@
+VertexLitGeneric {
+	$basetexture models\bsz\astrozombie\c_zom_moon_pressure_suit_c
+	$bumpmap "models\bsz\astrozombie\c_zom_moon_pressure_suit_c_n"
+	
+	"$phong"	"1"
+	"$phongboost"	"1"
+	"$phongexponent" "1"
+	"$phongtint" "[1 1 1]"
+	"$normalmapalphaphongmask"	"1"
+	"$phongfresnelranges"	"[0.7 0.85 1]"
+}
