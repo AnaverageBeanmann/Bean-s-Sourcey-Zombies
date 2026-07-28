@@ -77,6 +77,7 @@ ENT.BSZ_Headcrab_FallingFromHang = false
 -- ENT.BSZ_Headcrab_Spawning = false
 ENT.BSZ_Headcrab_SpawnedFromZombie = false
 ENT.BSZ_Headcrab_FreeFalling = false
+ENT.BSZ_Headcrab_IsDrowning = false
 --------------------
 function ENT:BSZ_Headcrab_ApplyBurrowedEffects()
 
@@ -458,6 +459,8 @@ function ENT:OnThink()
 			end
 		end
 	end
+
+	-- if !self.BSZ_Headcrab_IsDrowning && self:Wat
 
 	-- if self.BSZ_Headcrab_FreeFalling && self:BSZ_Headcrab_FreeFallCheck() then
 		-- self:SetGroundEntity(NULL)
