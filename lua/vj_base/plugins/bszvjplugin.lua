@@ -17,6 +17,12 @@ VJ.AddCategoryInfo(vCatZ, {Icon = "icons/bszicon.png"})
 -- Misc.
 	VJ.AddNPC("Crabbed", "npc_bsz_crabbed", vCatZ)
 
+-- unfinished/work in progress, use at own risk
+	VJ.AddNPC("Charred", "npc_bsz_charred", vCatZ)
+	VJ.AddNPC("Astrozombie", "npc_bsz_astrozomb", vCatZ)
+	VJ.AddNPC("Tank", "npc_bsz_tank", vCatZ)
+	VJ.AddNPC("Poison Zombie", "npc_bsz_poisonzombie", vCatZ)
+
 -- -= ConVars =-
 -- General
 VJ.AddConVar("bsz_spawnintros", 1, FCVAR_ARCHIVE)
