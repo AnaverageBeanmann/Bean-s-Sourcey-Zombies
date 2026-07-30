@@ -73,11 +73,13 @@ ENT.BSZ_Headcrab_BurrowedBecauseDistance = false
 -- Hanging
 ENT.BSZ_Headcrab_IsHanging = false
 ENT.BSZ_Headcrab_FallingFromHang = false
+-- Drowning
+ENT.BSZ_Headcrab_IsDrowning = false
+ENT.BSZ_Headcrab_DrownDamageTime = CurTime()
 -- Misc
 -- ENT.BSZ_Headcrab_Spawning = false
 ENT.BSZ_Headcrab_SpawnedFromZombie = false
 ENT.BSZ_Headcrab_FreeFalling = false
-ENT.BSZ_Headcrab_IsDrowning = false
 --------------------
 function ENT:BSZ_Headcrab_ApplyBurrowedEffects()
 
@@ -97,7 +99,7 @@ function ENT:BSZ_Headcrab_Unborrow()
 	self.GodMode = false
 	self:RemoveFlags(FL_NOTARGET)
 	self:SetCollisionGroup(COLLISION_GROUP_NPC)
-	self.HasLeapAttack = true
+	if !self.BSZ_Headcrab_IsDrowning then self.HasLeapAttack = true end
 	self.HasSounds = true
 	self:SetFOV(156)
 	self:PlayAnim("vjseq_burrowout", true, 1.5, false)
@@ -196,7 +198,7 @@ function ENT:BSZ_Headcrab_IsGroundCheck()
 			self.BSZ_Headcrab_FreeFalling = false
 			self:SetState()
 			self:PlayAnim("vjseq_ceiling_land", true, 0.65, false)
-			timer.Simple(1, function() if IsValid(self) then
+			timer.Simple(1, function() if IsValid(self) && !self.BSZ_Headcrab_IsDrowning then
 				self.HasLeapAttack = true
 			end end)
 		end
@@ -424,23 +426,36 @@ function ENT:OnThink()
 		-- PrintMessage(4,"no")
 	-- end
 
-	if self.BSZ_Headcrab_IsBurrowed && IsValid(self:GetEnemy()) then
-		if self.IsGuard or self.BSZ_Headcrab_BurrowedBecauseDistance then
-			if self:GetPos():Distance(self:GetEnemy():GetPos()) <= 150 then
-				self:BSZ_Headcrab_Unborrow()
+	if self.BSZ_Headcrab_IsBurrowed then
+		if IsValid(self:GetEnemy()) then
+			if self.IsGuard or self.BSZ_Headcrab_BurrowedBecauseDistance then
+				if self:GetPos():Distance(self:GetEnemy():GetPos()) <= 200 && math.random(1,3) == 1 then
+					self:BSZ_Headcrab_Unborrow()
+				end
+			else
+				if self.BSZ_Headcrab_UnburrowTime < CurTime() then
+					if self:BSZ_Headcrab_UnburrowStuckCheck() then
+						-- PrintMessage(4,"yes")
+						self:BSZ_Headcrab_Unborrow()
+					else
+						-- PrintMessage(4,"no")
+						self.BSZ_Headcrab_UnburrowTime = CurTime() + 1
+					end
+				end
 			end
 		else
-			if self.BSZ_Headcrab_UnburrowTime < CurTime() then
+			if !self.IsGuard && self.BSZ_Headcrab_UnburrowTime < CurTime() then
 				if self:BSZ_Headcrab_UnburrowStuckCheck() then
-					-- PrintMessage(4,"yes")
 					self:BSZ_Headcrab_Unborrow()
 				else
-					-- PrintMessage(4,"no")
 					self.BSZ_Headcrab_UnburrowTime = CurTime() + 1
 				end
 			end
 		end
-	elseif !self.BSZ_Headcrab_IsBurrowed && self:BSZ_Headcrab_IsGroundCheck() && self.BSZ_Headcrab_CanBurrow then
+		if self.BSZ_Headcrab_IsDrowning && self:BSZ_Headcrab_UnburrowStuckCheck() then
+			self:BSZ_Headcrab_Unborrow()
+		end
+	elseif !self.BSZ_Headcrab_IsBurrowed && self:BSZ_Headcrab_IsGroundCheck() && self.BSZ_Headcrab_CanBurrow && !self.BSZ_Headcrab_IsDrowning then
 		if self.IsGuard then
 			self.BSZ_Headcrab_IsBurrowed = true
 			self:PlayAnim("vjseq_burrowin", true, 2, false)
@@ -460,7 +475,29 @@ function ENT:OnThink()
 		end
 	end
 
-	-- if !self.BSZ_Headcrab_IsDrowning && self:Wat
+	if self.BSZ_Headcrab_IsDrowning && self.BSZ_Headcrab_DrownDamageTime < CurTime() then
+		self.BSZ_Headcrab_DrownDamageTime = CurTime() + 1
+		self:SetHealth(self:Health() - 3)
+		if self:Health() < 1 then
+			self.Bleeds = false
+			self:TakeDamage(10)
+		end
+	end
+
+	if !self.BSZ_Headcrab_IsDrowning && self:WaterLevel() > 1 then
+		self.BSZ_Headcrab_IsDrowning = true
+		self.MovementType = VJ_MOVETYPE_STATIONARY
+		self:DoChangeMovementType(self.MovementType)
+		self.CanTurnWhileStationary = false
+		self.HasLeapAttack = false
+		self:ClearGoal()
+	elseif self.BSZ_Headcrab_IsDrowning && self:WaterLevel() < 1 then
+		self.BSZ_Headcrab_IsDrowning = false
+		self.MovementType = VJ_MOVETYPE_GROUND
+		self:DoChangeMovementType(self.MovementType)
+		self.CanTurnWhileStationary = true
+		self.HasLeapAttack = true
+	end
 
 	-- if self.BSZ_Headcrab_FreeFalling && self:BSZ_Headcrab_FreeFallCheck() then
 		-- self:SetGroundEntity(NULL)
@@ -657,7 +694,7 @@ end
 --------------------
 function ENT:TranslateActivity(act)
 	if act == ACT_IDLE then
-		if self.BSZ_Headcrab_FreeFalling then
+		if self.BSZ_Headcrab_FreeFalling or self.BSZ_Headcrab_IsDrowning then
 			return ACT_HOP
 		elseif self.BSZ_Headcrab_IsHanging then
 			return ACT_IDLE_STEALTH
