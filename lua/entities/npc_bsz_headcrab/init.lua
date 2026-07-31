@@ -386,6 +386,11 @@ function ENT:Init()
 	if self.BSZ_Headcrab_SpawnedFromZombie then
 		self.BSZ_Headcrab_FreeFalling = true
 		self.HasLeapAttack = false
+		-- anti-stuck failsafe
+		timer.Simple(10, function() if IsValid(self) && self.BSZ_Headcrab_FreeFalling then
+			self.Bleeds = false
+			self:TakeDamage(self:Health() * 2)
+		end end)
 	end
 
 	if self.BSZ_Headcrab_IsHanging then
